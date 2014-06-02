@@ -184,8 +184,36 @@ public class SparseVector extends AbstractVector implements ISparseVector {
 
     @Override
     public Vector mult(double alpha, Vector y) {
+        if (alpha == 0.0)
+            return this.zero();
+
+        if (y instanceof SparseVector)
+            return multSparse(alpha, (SparseVector) y);
+
         for (int i = 0; i < used; ++i)
             data[i] *= alpha * y.get(index[i]);
+        return this;
+    }
+
+    public Vector multSparse(double alpha, SparseVector y) {
+        if (y.used == 0)
+            return this.zero();
+
+        for (int i = 0, j = 0; i < used; ++i) {
+            if (j >= y.used) {
+                data[i] = 0.0;
+                continue;
+            }
+
+            int idx = index[i];
+
+            while (y.index[j] < idx && j < y.used - 1)
+                j++;
+
+            if (y.index[j] == idx) {
+                data[i] *= alpha * y.data[j];
+            }
+        }
         return this;
     }
 

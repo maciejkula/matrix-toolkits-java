@@ -97,4 +97,16 @@ public class SparseVectorTest extends VectorTestAbstract {
             assertTrue(tfVector[index]== value);
         }
 	}
+
+    /*
+    * Test for Vector mult(double, Vector)
+    */
+    public void testSparseMultDoubleVector() {
+        double alpha = Math.random();
+        yd[yd.length - 1] = 0.0;
+        y.set(yd.length - 1, 0.0);
+        SparseVector v = new SparseVector(y);
+        v.compact();
+        assertEquals(mult(alpha, yd), x.mult(alpha, v));
+    }
 }
