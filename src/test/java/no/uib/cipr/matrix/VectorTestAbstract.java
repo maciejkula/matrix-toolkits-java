@@ -191,6 +191,27 @@ public abstract class VectorTestAbstract extends TestCase {
         return xd;
     }
 
+    /*
+    * Test for Vector mult(double, Vector)
+    */
+    public void testMultDoubleVector() {
+        double alpha = Math.random();
+        assertEquals(mult(alpha, yd), x.mult(alpha, y));
+    }
+
+    /*
+    * Test for Vector mult(Vector)
+    */
+    public void testMultVector() {
+        assertEquals(mult(1.0, yd), x.mult(y));
+    }
+
+    protected double[] mult(double alpha, double[] yd) {
+        for (int i = 0; i < xd.length; ++i)
+            xd[i] *= alpha * yd[i];
+        return xd;
+    }
+
     public void testDotDense() {
         assertEquals(dot(yd), x.dot(yDense), tol);
         assertEquals(xd, x);

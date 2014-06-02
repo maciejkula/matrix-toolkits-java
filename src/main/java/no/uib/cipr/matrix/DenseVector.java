@@ -176,6 +176,12 @@ public class DenseVector extends AbstractVector implements Serializable {
     }
 
     @Override
+    public void mult(int index, double value) {
+        check(index);
+        data[index] *= value;
+    }
+
+    @Override
     public double get(int index) {
         check(index);
         return data[index];

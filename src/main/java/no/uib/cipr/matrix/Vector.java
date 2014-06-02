@@ -30,8 +30,9 @@ import java.io.Serializable;
  * <h4>Basic operations</h4>
  * <p>
  * Use <code>size</code> to get the vector size. <code>get(int)</code> gets
- * an element, and there are corresponding <code>set(int,double)</code> and
- * <code>add(int,double)</code> methods as well. Note that vector indices are
+ * an element, and there are corresponding <code>set(int,double)</code>,
+ * <code>add(int,double)</code>, and <code>mult(int,double)</code>
+ * methods as well. Note that vector indices are
  * zero-based (typical for Java and C). This means that they range from 0 to
  * <code>size-1</code>. It is legal to have <code>size</code> equal zero.
  * </p>
@@ -66,8 +67,10 @@ import java.io.Serializable;
  * structures are incompatible</dd>
  * <dt><i>Scaling</i></dt>
  * <dd>Scalar multiplication (scaling) of a whole vector</dd>
+ * <dt><i>Elementwise multiplication</i></dt>
+ * <dd>Elementwise multiplication of vectors</dd>
  * <dt><i>Norms</i></dt>
- * <dd>Both innerproducts and norms can be computed. Several common norms are
+ * <dd>Both inner products and norms can be computed. Several common norms are
  * supported</dd>
  * </dl>
  */
@@ -87,6 +90,11 @@ public interface Vector extends Iterable<VectorEntry>, Serializable {
      * <code>x(index) += value</code>
      */
     void add(int index, double value);
+
+    /**
+     * <code>x(index) *= value</code>
+     */
+    void mult(int index, double value);
 
     /**
      * Returns <code>x(index)</code>
@@ -138,6 +146,22 @@ public interface Vector extends Iterable<VectorEntry>, Serializable {
      * @return x
      */
     Vector add(double alpha, Vector y);
+
+    /**
+     * Elementwise.
+     * <code>x = y * x</code>
+     *
+     * @return x
+     */
+    Vector mult(Vector y);
+
+    /**
+     * Elementwise.
+     * <code>x = alpha * y * x</code>
+     *
+     * @return x
+     */
+    Vector mult(double alpha, Vector y);
 
     /**
      * <code>x<sup>T</sup>*y</code>

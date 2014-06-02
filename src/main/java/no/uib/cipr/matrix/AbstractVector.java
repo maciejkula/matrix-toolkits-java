@@ -90,6 +90,10 @@ public abstract class AbstractVector implements Vector, Serializable {
         set(index, value + get(index));
     }
 
+    public void mult(int index, double value) {
+        set(index, value * get(index));
+    }
+
     public double get(int index) {
         throw new UnsupportedOperationException();
     }
@@ -157,6 +161,24 @@ public abstract class AbstractVector implements Vector, Serializable {
 
         for (VectorEntry e : y)
             add(e.index(), alpha * e.get());
+
+        return this;
+    }
+
+    public Vector mult(Vector y) {
+        return mult(1.0, y);
+    }
+
+    public Vector mult(double alpha, Vector y) {
+        checkSize(y);
+
+        if (alpha == 0) {
+            this.zero();
+            return this;
+        }
+
+        for (VectorEntry e : y)
+            mult(e.index(), alpha * e.get());
 
         return this;
     }
