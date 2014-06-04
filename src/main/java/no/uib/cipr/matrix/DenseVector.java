@@ -28,6 +28,7 @@ import no.uib.cipr.matrix.io.MatrixVectorReader;
 import no.uib.cipr.matrix.io.VectorInfo;
 import no.uib.cipr.matrix.io.VectorSize;
 import no.uib.cipr.matrix.io.VectorInfo.VectorField;
+import no.uib.cipr.matrix.sparse.SparseVector;
 
 /**
  * Dense vector. Stored by a <code>double[]</code> array of the same length as
@@ -267,6 +268,25 @@ public class DenseVector extends AbstractVector implements Serializable {
             data[i] += alpha * yd[i];
 
         return this;
+    }
+
+    @Override
+    public Vector mult(double alpha, Vector y) {
+        if (!(y instanceof SparseVector))
+            return super.mult(alpha, y);
+
+        double[] yd = ((SparseVector) y).getData();
+        int[] yi = ((SparseVector) y).getIndex();
+
+        if (yi.length == 0)
+            return this.zero();
+
+        int j = 0;
+        for (int i = 0; i < data.length; i++) {
+            if 
+        }
+
+
     }
 
     @Override
