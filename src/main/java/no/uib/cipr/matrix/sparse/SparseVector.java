@@ -175,11 +175,8 @@ public class SparseVector extends AbstractVector implements ISparseVector {
     public void mult(int index, double value) {
         check(index);
 
-        double thisValue = get(index);
-        if (thisValue != 0.0) {
-            int i = getIndex(index);
-            data[i] *= value;
-        }
+        int i = getIndex(index);
+        data[i] *= value;
     }
 
     @Override
@@ -200,11 +197,6 @@ public class SparseVector extends AbstractVector implements ISparseVector {
             return this.zero();
 
         for (int i = 0, j = 0; i < used; ++i) {
-            if (j >= y.used) {
-                data[i] = 0.0;
-                continue;
-            }
-
             int idx = index[i];
 
             while (y.index[j] < idx && j < y.used - 1)
@@ -212,6 +204,8 @@ public class SparseVector extends AbstractVector implements ISparseVector {
 
             if (y.index[j] == idx) {
                 data[i] *= alpha * y.data[j];
+            } else {
+                data[i] = 0.0;
             }
         }
         return this;

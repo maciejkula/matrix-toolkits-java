@@ -212,6 +212,12 @@ public abstract class VectorTestAbstract extends TestCase {
         return xd;
     }
 
+    protected double[] mult(double alpha, double[] a, double[] b) {
+        for (int i = 0; i < a.length; ++i)
+            a[i] *= alpha * b[i];
+        return a;
+    }
+
     public void testDotDense() {
         assertEquals(dot(yd), x.dot(yDense), tol);
         assertEquals(xd, x);

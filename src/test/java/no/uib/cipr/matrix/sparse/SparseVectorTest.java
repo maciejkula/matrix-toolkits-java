@@ -103,10 +103,16 @@ public class SparseVectorTest extends VectorTestAbstract {
     */
     public void testSparseMultDoubleVector() {
         double alpha = Math.random();
-        yd[yd.length - 1] = 0.0;
-        y.set(yd.length - 1, 0.0);
-        SparseVector v = new SparseVector(y);
-        v.compact();
-        assertEquals(mult(alpha, yd), x.mult(alpha, v));
+
+        double[] a = {0.0, 0.5, 0.0, 0.3, 0.0, 0.0};
+        double[] b = {1.0, 0.0, 3.0, 4.0, 0.0, 0.0};
+
+        SparseVector aVector = new SparseVector(new DenseVector(a));
+        SparseVector bVector = new SparseVector(new DenseVector(b));
+
+        aVector.compact();
+        bVector.compact();
+
+        assertEquals(mult(alpha, a, b), aVector.mult(alpha, bVector));
     }
 }
